@@ -115,7 +115,6 @@ function App() {
               <Editor
                 editorState={description}
                 onChange={setDescription}
-                // className="bg-white p-2"
                 placeholder="Add description"
               />
 
@@ -197,7 +196,7 @@ function App() {
                                   {...provided.dragHandleProps}
                                   className=" rounded mt-4 p-2 bg"
                                   style={{
-                                    background: `linear-gradient(90deg,rgba(255, 102, 20, 1) 0%,rgba(255, 69, 17, 1) 100%)`,
+                                    background: `linear-gradient(90deg,rgba(255, 105, 20, 1) 0%,rgba(255, 126, 17, 1) 100%)`,
                                     userSelect: "none",
                                     ...provided.draggableProps.style,
                                   }}
