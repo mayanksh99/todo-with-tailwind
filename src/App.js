@@ -119,26 +119,32 @@ function App() {
                 placeholder="Add description"
               />
 
-              <div className="justify-around">
-                <p className="mt-4 text-xl">Status </p>
-                <input
-                  type="radio"
-                  id="pending"
-                  name="status"
-                  value="pending"
-                  checked={status === "pending"}
-                  onChange={(e) => setStatus(e.target.value)}
-                ></input>
-                <label htmlFor="pending">Pending</label>
-                <input
-                  type="radio"
-                  id="progress"
-                  name="fav_language"
-                  value="progress"
-                  checked={status === "progress"}
-                  onChange={(e) => setStatus(e.target.value)}
-                ></input>
-                <label htmlFor="progress">In progress</label>
+              <p className="mt-4 text-xl">Status </p>
+              <div className="flex justify-around">
+                <div>
+                  <input
+                    className="mt-1 mr-2"
+                    type="radio"
+                    id="pending"
+                    name="status"
+                    value="pending"
+                    checked={status === "pending"}
+                    onChange={(e) => setStatus(e.target.value)}
+                  ></input>
+                  <label htmlFor="pending">Pending</label>
+                </div>
+                <div>
+                  <input
+                    className="mt-1 mr-2"
+                    type="radio"
+                    id="progress"
+                    name="fav_language"
+                    value="progress"
+                    checked={status === "progress"}
+                    onChange={(e) => setStatus(e.target.value)}
+                  ></input>
+                  <label htmlFor="progress">In progress</label>
+                </div>
               </div>
               <p className="mt-4 mb-2 text-xl">Due Date </p>
               <DatePicker
@@ -148,14 +154,13 @@ function App() {
                 dateFormat="dd/MM/yyyy"
                 minDate={new Date()}
               />
-              <div className="flex justify-end w-max">
-                <button
-                  className=" mt-4  rounded px-2 py-1 bg-blue-900"
-                  type="submit"
-                >
-                  Add task
-                </button>
-              </div>
+
+              <button
+                className="w-full mt-6 rounded px-2 py-1 btn text-black font-semibold"
+                type="submit"
+              >
+                Add task
+              </button>
             </form>
           </div>
         </div>
