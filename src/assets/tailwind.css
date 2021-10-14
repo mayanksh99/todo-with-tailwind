@@ -1,0 +1,32 @@
+*,
+*:before,
+*:after {
+  @apply box-border;
+}
+
+body {
+  background-color: #1b283a;
+  color: antiquewhite;
+}
+
+.contnr {
+  @apply max-w-2xl xl:max-w-4xl 2xl:max-w-7xl mx-auto;
+}
+
+.public-DraftStyleDefault-ltr {
+  background: white;
+  color: black;
+}
+
+.noScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.noScroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
