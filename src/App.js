@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./assets/main.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,9 +6,10 @@ import { Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from "draft-js-export-html";
 import { MdDelete } from "react-icons/md";
-import { RiEdit2Fill, RiTimerFill } from "react-icons/ri";
+import { RiEdit2Fill, RiTimerFill, RiCloseCircleFill } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import EditTodo from "./components/editTodo";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -22,8 +23,8 @@ function App() {
     "In Progress": [],
     Done: [],
   });
-
-  console.log(todo);
+  const [editData, setEditData] = useState(null);
+  const modalRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -88,6 +89,10 @@ function App() {
   const onDeleteTodo = (id, name) => {
     const list = todo[name].filter((item) => (item.id !== id ? item : null));
     setTodo({ ...todo, [name]: list });
+  };
+
+  const handleTodoUpdate = (d) => {
+    console.log(d);
   };
 
   return (
@@ -157,6 +162,9 @@ function App() {
               <button
                 className="w-full mt-6 rounded px-2 py-1 btn text-black font-semibold"
                 type="submit"
+                disabled={
+                  title && description && status && dueDate ? false : true
+                }
               >
                 Add task
               </button>
@@ -164,9 +172,9 @@ function App() {
           </div>
         </div>
         <DragDropContext onDragEnd={(res) => onDragEnd(res)}>
-          {Object.entries(todo).map(([name, column]) => {
+          {Object.entries(todo).map(([name, column], id) => {
             return (
-              <Droppable droppableId={name}>
+              <Droppable droppableId={name} key={id}>
                 {(provided, snapshot) => {
                   return (
                     <div
@@ -196,7 +204,7 @@ function App() {
                                   {...provided.dragHandleProps}
                                   className=" rounded mt-4 p-2 bg"
                                   style={{
-                                    background: `linear-gradient(90deg,rgba(255, 105, 20, 1) 0%,rgba(255, 126, 17, 1) 100%)`,
+                                    background: `linear-gradient(90deg,rgba(120, 105, 20, 1) 0%,rgba(154, 126, 17, 1) 100%)`,
                                     userSelect: "none",
                                     ...provided.draggableProps.style,
                                   }}
@@ -230,7 +238,16 @@ function App() {
                                         onDeleteTodo(item.id, name)
                                       }
                                     />
-                                    <RiEdit2Fill />
+                                    <RiEdit2Fill
+                                      className="cursor-pointer"
+                                      onClick={() => {
+                                        setEditData(item);
+                                        modalRef.current.classList.remove(
+                                          "hidden"
+                                        );
+                                        modalRef.current.classList.add("block");
+                                      }}
+                                    />
                                   </div>
                                 </div>
                               );
@@ -247,6 +264,12 @@ function App() {
           })}
         </DragDropContext>
       </div>
+      <EditTodo
+        data={editData}
+        modalRef={modalRef}
+        CloseBtn={RiCloseCircleFill}
+        update={handleTodoUpdate}
+      />
     </div>
   );
 }
